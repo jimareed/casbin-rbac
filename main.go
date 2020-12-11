@@ -13,31 +13,32 @@ func main() {
 		log.Fatalf("unable to create Casbin enforcer: %v", err)
 	}
 
-	aliceRoles, err := e.GetRolesForUser("alice")
+	result, err := e.Enforce("alice", "data1", "read")
 	if err != nil {
-		log.Fatalf("could not get roles for alice: %v", err)
+		log.Fatalf("Enforce error: %v", err)
 	}
-	alicePerms, err := e.GetImplicitPermissionsForUser("alice")
-	if err != nil {
-		log.Fatalf("could not get permissions for alice: %v", err)
-	}
-	fmt.Printf(
-		"alice is a member of the following roles: %v, and her permissions are: %v\n",
-		aliceRoles,
-		alicePerms,
-	)
 
-	bobRoles, err := e.GetRolesForUser("bob")
+	fmt.Printf("alice, data1, read: %v\n", result)
+
+	result, err = e.Enforce("alice", "data1", "write")
 	if err != nil {
-		log.Fatalf("could not get roles for bob: %v", err)
+		log.Fatalf("Enforce error: %v", err)
 	}
-	bobPerms, err := e.GetImplicitPermissionsForUser("bob")
+
+	fmt.Printf("alice, data1, write: %v\n", result)
+
+	result, err = e.Enforce("alice", "data2", "read")
 	if err != nil {
-		log.Fatalf("could not get permissions for bob: %v", err)
+		log.Fatalf("Enforce error: %v", err)
 	}
-	fmt.Printf(
-		"bob is a member of the following roles: %v, and his permissions are: %v\n",
-		bobRoles,
-		bobPerms,
-	)
+
+	fmt.Printf("alice, data2, read: %v\n", result)
+
+	result, err = e.Enforce("alice", "data2", "write")
+	if err != nil {
+		log.Fatalf("Enforce error: %v", err)
+	}
+
+	fmt.Printf("alice, data2, write: %v\n", result)
+
 }
