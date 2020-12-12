@@ -3,8 +3,10 @@ trying out Casbin for RBAC
 
 ```
 go run .
-alice is a member of the following roles: [role:admin], and her permissions are: [[role:admin data read] [role:admin data write]]
-bob is a member of the following roles: [role:user], and his permissions are: [[role:user data read]]
+alice, data1, read: true
+alice, data1, write: true
+alice, data2, read: false
+alice, data2, write: true
 ```
 
 ### Sources
